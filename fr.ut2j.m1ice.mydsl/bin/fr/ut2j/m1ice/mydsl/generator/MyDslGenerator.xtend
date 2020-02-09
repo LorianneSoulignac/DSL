@@ -23,10 +23,10 @@ class MyDslGenerator extends AbstractGenerator {
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		var myFsm = resource.contents.get(0) as FSM
 		
-		fsa.generateFile("MAIN.java", generateFsmMainClass(myFsm))
-		fsa.generateFile("STATEA.java", generateAbstractState())
-		fsa.generateFile("STATEN.java", generateNormalState())
-		fsa.generateFile("TRANSITION.java", generateTransition())
+		fsa.generateFile("FSM.java", generateFsmMainClass(myFsm))
+		fsa.generateFile("StateAbstr.java", generateAbstractState())
+		fsa.generateFile("State.java", generateNormalState())
+		fsa.generateFile("Transition.java", generateTransition())
 		
 		//myFsm.state.forEach[e | fsa.generateFile(e.name.toUpperCase+".java", generateHW(e.name))]
 				
@@ -52,8 +52,8 @@ class MyDslGenerator extends AbstractGenerator {
 							this.trigger = trigger;
 						}
 						
-						public StateAbstr getStateStart() { return this.src; }
-						public StateAbstr getStateEnd() { return this.target; }
+						public StateAbstr getStateStart() { return this.stateStart; }
+						public StateAbstr getStateEnd() { return this.stateEnd; }
 						public String getTrigger() { return this.trigger; }
 					} '''
 	}
@@ -73,19 +73,19 @@ class MyDslGenerator extends AbstractGenerator {
 		public abstract class StateAbstr {
 					private String state;
 					
-					public StateAbstr(st)
-						this.state = st;
+					public StateAbstr(String st){
+						this.state = st;}
 						
-					public StateAbstr getState() {return this.state;}
+					public String getState() {return this.state;}
 					
-					public void setState(newSt) {this.state = newSt;}
+					public void setState( String newSt) {this.state = newSt;}
 					
 					@Override
 						public boolean equals(Object o) {
 							if (this == o) return true;
 							if (o == null || getClass() != o.getClass()) return false;
 							StateAbstr that = (StateAbstr) o;
-							return Objects.equals(name, that.name);
+							return Objects.equals(state, that.state);
 						}
 					
 		}'''
@@ -96,13 +96,13 @@ class MyDslGenerator extends AbstractGenerator {
 			
 				var initState = fsm.state.filter[state | state instanceof Initial].get(0);
 				var finalState = fsm.state.filter[state | state instanceof Final].get(0);
-				return ''' public class FSM {
+				return ''' 
+				import java.util.Scanner;
+				import java.util.List;
+				import java.util.ArrayList;
+				public class FSM {
 					public void execute() {
-						
-										import java.util.Scanner;
-										import java.util.List;
-										import java.util.ArrayList;
-													
+									
 										List<Transition> transitions = new ArrayList<>();
 										«FOR tr: fsm.transition »
 											transitions.add(new Transition(new State("«tr.state1.name»"), new State("«tr.state2.name»"), "«tr.name»"));
@@ -114,9 +114,10 @@ class MyDslGenerator extends AbstractGenerator {
 										System.out.println("Bonjour");
 										
 										while(!current.equals(finalState)) {
-											System.out.println("State current : " + current.getState());
+											System.out.println("Etat courant : " + current.getState());
 											final StateAbstr currentState = current;
-											final String trigger = sc.nextLine(); 
+											System.out.println("Lancer la transition : ");
+											String trigger = sc.nextLine(); 
 											Transition transition = transitions.stream()
 																.filter(tr -> tr.getStateStart().equals(currentState) && tr.getTrigger().equals(trigger))
 																.findFirst().orElse(null);

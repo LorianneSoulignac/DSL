@@ -50,17 +50,17 @@ public class MyDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTransitionTransitionParserRuleCall_7_1_0 = (RuleCall)cTransitionAssignment_7_1.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
-		//FSM: //{FSM}
+		//FSM: //{FSM} 
 		//	'FSM' name=EString '{' 'initial' state+=Initial 'final' state+=Final ('state' state+=State ("," state+=State)* |
 		//	transition+=Transition)* '}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		////{FSM}
+		////{FSM} 
 		//'FSM' name=EString '{' 'initial' state+=Initial 'final' state+=Final ('state' state+=State ("," state+=State)* |
 		//transition+=Transition)* '}'
 		public Group getGroup() { return cGroup; }
 		
-		////{FSM}
+		////{FSM} 
 		//'FSM'
 		public Keyword getFSMKeyword_0() { return cFSMKeyword_0; }
 		
@@ -329,7 +329,7 @@ public class MyDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	//FSM: //{FSM}
+	//FSM: //{FSM} 
 	//	'FSM' name=EString '{' 'initial' state+=Initial 'final' state+=Final ('state' state+=State ("," state+=State)* |
 	//	transition+=Transition)* '}';
 	public FSMElements getFSMAccess() {
