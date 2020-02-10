@@ -1,15 +1,25 @@
 package aspects.fsm.aspects;
 
+import aspects.fsm.aspects.FSMAspect;
+import fr.ut2j.m1ice.fsm.FSM;
+import fr.ut2j.m1ice.fsm.FsmPackage;
+import java.util.Map;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+
 @SuppressWarnings("all")
 public class Interpreter {
   public static void main(final String[] args) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method or field fr is undefined"
-      + "\nThe method or field execute is undefined for the type FSM"
-      + "\nut2j cannot be resolved"
-      + "\nm1ice cannot be resolved"
-      + "\nfsm cannot be resolved"
-      + "\neINSTANCE cannot be resolved"
-      + "\nclass cannot be resolved");
+    FsmPackage.eINSTANCE.getClass();
+    Map<String, Object> _extensionToFactoryMap = Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap();
+    XMIResourceFactoryImpl _xMIResourceFactoryImpl = new XMIResourceFactoryImpl();
+    _extensionToFactoryMap.put("xmi", _xMIResourceFactoryImpl);
+    Resource resource = new ResourceSetImpl().getResource(URI.createURI("C:\\Users\\Etu\\Desktop\\cours\\Master 1\\tp_dsl\\DSL\\fr.ut2j.m1ice.fsm\\model\\FSM.xmi"), true);
+    EObject _get = resource.getContents().get(0);
+    FSM myfsm = ((FSM) _get);
+    FSMAspect.execute(myfsm);
   }
 }
