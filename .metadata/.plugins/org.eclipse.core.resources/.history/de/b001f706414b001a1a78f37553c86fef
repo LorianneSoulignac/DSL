@@ -1,0 +1,43 @@
+package aspects.fsm.aspects
+
+import fr.inria.diverse.k3.al.annotationprocessor.Aspect
+import fr.ut2j.m1ice.fsm.FSM
+import fr.ut2j.m1ice.fsm.State
+import fr.ut2j.m1ice.fsm.Transition
+import fr.ut2j.m1ice.fsm.Initial
+import fr.ut2j.m1ice.fsm.Final
+
+import static extension aspects.fsm.aspects.FSMAspect.*
+import static extension aspects.fsm.aspects.StateAspect.*
+import static extension aspects.fsm.aspects.TransitionAspect.*
+import static extension aspects.fsm.aspects.InitialAspect.*
+import static extension aspects.fsm.aspects.FinalAspect.*
+import fr.ut2j.m1ice.fsm.FSM
+
+@Aspect(className=FSM)
+class FSMAspect {
+
+}
+
+@Aspect(className=State)
+class StateAspect {
+
+}
+
+@Aspect(className=Transition)
+class TransitionAspect {
+
+}
+
+@Aspect(className=Initial)
+class InitialAspect extends StateAspect {
+
+}
+
+@Aspect(className=Final)
+class FinalAspect extends StateAspect {
+
+}
+
+
+
